@@ -164,7 +164,8 @@ function clearBG() {
     //clear the background by filling everything with white
     fill(bgcolor);
     noStroke();
-    rect(0, 100, screen.width, screen.height - 100);
+    rect(0, 100, width, height);
+    //rect(0, 100, screen.width, screen.height - 100);
 }
 
 function SaveImage() {
