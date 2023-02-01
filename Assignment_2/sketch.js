@@ -58,9 +58,9 @@ function setupCanvas() {
     //Light Blue
     LightBlue_Button = createButton('');
     LightBlue_Button.size(50, 50);
-    LightBlue_Button.style('background-color', 'lightblue');
+    LightBlue_Button.style('background-color', 'cyan');
     LightBlue_Button.position(245, 23);
-    LightBlue_Button.mouseClicked(set_lightBlue);
+    LightBlue_Button.mouseClicked(set_cyan);
     //Blue
     Blue_Button = createButton('');
     Blue_Button.size(50, 50);
@@ -135,8 +135,8 @@ function set_green() {
     c = 'green';
 }
 
-function set_lightBlue() {
-    c = 'light blue';
+function set_cyan() {
+    c = 'cyan';
 }
 
 function set_blue() {
