@@ -162,12 +162,7 @@ function set_black() {
 
 function clearBG() {
     //clear the background by filling everything with white
-    background(bgcolor);
-
-    /*fill(bgcolor);
-    noStroke();
-    rect(0, 100, width, height);*/
-    //rect(0, 100, screen.width, screen.height - 100);
+    background('white');
 }
 
 function SaveImage() {
