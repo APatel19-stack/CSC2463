@@ -70,9 +70,9 @@ function setupCanvas() {
     //Purple
     Purple_Button = createButton('');
     Purple_Button.size(50, 50);
-    Purple_Button.style('background-color', 'purple');
+    Purple_Button.style('background-color', 'magenta');
     Purple_Button.position(355, 23);
-    Purple_Button.mouseClicked(set_purple);
+    Purple_Button.mouseClicked(set_magenta);
     //Brown
     Brown_Button = createButton('');
     Brown_Button.size(50, 50);
@@ -143,8 +143,8 @@ function set_blue() {
     c = 'blue';
 }
 
-function set_purple() {
-    c = 'purple';
+function set_magenta() {
+    c = 'magenta';
 }
 
 function set_brown() {
