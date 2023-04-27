@@ -64,20 +64,28 @@ function updateSnakeCoordinates() {
   }
   switch (direction) {
     case 'right':
+      
       xCor[numSegments - 1] = xCor[numSegments - 2] + diff;
       yCor[numSegments - 1] = yCor[numSegments - 2];
+      console.log("right" + xCor);
       break;
     case 'up':
       xCor[numSegments - 1] = xCor[numSegments - 2];
       yCor[numSegments - 1] = yCor[numSegments - 2] - diff;
+      console.log("up" + xCor);
+
       break;
     case 'left':
       xCor[numSegments - 1] = xCor[numSegments - 2] - diff;
       yCor[numSegments - 1] = yCor[numSegments - 2];
+      console.log("left" + xCor);
+
       break;
     case 'down':
       xCor[numSegments - 1] = xCor[numSegments - 2];
       yCor[numSegments - 1] = yCor[numSegments - 2] + diff;
+      console.log("down" + xCor);
+
       break;
   }
 }
@@ -187,3 +195,82 @@ function keyPressed() {
       break;
   }
 }
+
+
+
+//Two key (Left and Right) version working 
+// function keyPressed() {
+  
+//   switch (keyCode) {
+//     case RIGHT_ARROW: 
+//       // if Dir = R and Act = R
+//       if(direction === 'right'){
+//         direction = 'down';
+//       }
+//       //if Dir = L and Act = R
+//       else if(direction === 'left' ){
+//         direction ='up';
+//       }
+//       //if Dir = U and Act = R
+//       else if(direction === 'up'){
+//         direction = 'right';
+//       }
+//       //if Dir = D and Act = R
+//       else if(direction === 'down' ){
+//         //or could be left depends on how easy it to navigate during game
+//         direction ='right';
+//       }
+//       break;
+
+
+
+//     case LEFT_ARROW:
+//       //if Dir = R and Act = L
+//       if(direction === 'right'){
+//         direction = 'up';
+//       }
+//       //if Dir = L and Act = L
+//       else if(direction === 'left' ){
+//         direction ='down';
+//       }
+//       //if Dir = U and Act = L
+//       else if(direction === 'up'){
+//         direction = 'left';
+//       }
+//       //if Dir = D and Act = L
+//       else if(direction === 'down' ){
+//         direction ='left';
+//       }
+//       break;
+
+//   }
+// }
+
+
+
+//Four Key(Left,Right,Up,Down) working version
+
+// function keyPressed() {
+//   switch (keyCode) {
+//     case RIGHT_ARROW:
+//       if (direction !== 'right') {
+//         direction = 'right';
+//       }
+//       break;
+//     case LEFT_ARROW:
+//       if (direction !== 'left') {
+//         direction = 'left';
+//       }
+//       break;
+//     case UP_ARROW:
+//       if (direction !== 'down') {
+//         direction = 'up';
+//       }
+//       break;
+//     case DOWN_ARROW:
+//       if (direction !== 'up') {
+//         direction = 'down';
+//       }
+//       break;
+//   }
+// }
