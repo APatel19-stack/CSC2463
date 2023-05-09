@@ -1,10 +1,7 @@
 {
-  "compilerOptions": {
-    "target": "es6"
-  },
   "include": [
     "*.js",
-    "**/*.js",
-    "c:\\Users\\patel\\.vscode\\extensions\\samplavigne.p5-vscode-1.2.13\\p5types\\global.d.ts"
+    "libraries/*.js",
+    "c:\\Users\\apate\\.vscode\\extensions\\wmcicompsci.cs30-p5-1.5.0\\p5types\\global.d.ts"
   ]
 }
