@@ -2,8 +2,8 @@
 // the snake is divided into small segments, which are drawn and edited on each 'draw' call
 let numSegments = 10;
 let direction = 'right';
-let obsticals_corr = [[200, 300], [500, 50]];
-let free_pass = 1;
+let obsticals_corr = [[200, 310], [400, 60],[130, 270], [310, 425],[450, 110], [220, 380]];
+let free_pass = 0;
 let tot_free_pass= 0;
 const xStart = 0; //starting x coordinate for snake
 const yStart = 250; //starting y coordinate for snake
@@ -27,8 +27,8 @@ let sensorData = {};
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
-// Declare variables for Tone.js and p5
-let synth, loop, notes;
+
+let notes;
 
 
 const GameState = {
@@ -38,6 +38,20 @@ const GameState = {
 };
 
 let game = {score: 0, maxScore: 0, state: GameState.Start };
+
+
+let melodyNotes = ["C4", "E4", "G4", "B4", "A4", "C5", "E5", "G5", "B4", "G4", "E4", "C4"];
+let synth = new Tone.Synth().toDestination();
+
+let melody = new Tone.Sequence((time, note) => {
+  synth.triggerAttackRelease(note, "8n", time);
+}, melodyNotes, "4n");
+
+melody.start(0);
+melody.loop = true;
+Tone.Transport.start();
+
+
 
 
 
@@ -51,35 +65,7 @@ function setup() {
     connectButton.position(10, 10);
     connectButton.mousePressed(connect);
 
-  
   } 
-
-
-
-
-  // Initialize the synth and set its properties
-  synth = new Tone.Synth({
-    oscillator: {
-      type: 'sine'
-    },
-    envelope: {
-      attack: 0.1,
-      decay: 0.2,
-      sustain: 0.5,
-      release: 1
-    }
-  });
-
-  // Set the loop with the sequence of notes to play
-  notes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'];
-  loop = new Tone.Sequence((time, note) => {
-    synth.triggerAttackRelease(note, '8n', time);
-  }, notes).start();
-
-  // Start the Tone.js Transport to play the loop
-  Tone.Transport.start();
-
-
    frameRate(15);
     updateFruitCoordinates();
     reset();
@@ -126,21 +112,23 @@ function draw() {
 
     case GameState.Playing:
 
-    //READ VALUE OF BUTTON (move to keypressed )
-      // joySwitch = sensorData.Switch;
-      // red = sensorData.Xaxis;
-      // green = sensorData.Yaxis;
-      // blue = sliderBlue.value();
+      background(0); 
+      stroke(200);
+      strokeWeight(1);
+      text("Free Pass remaining: " + (5- tot_free_pass),200,50);
 
-
-      background(0);  
       stroke(255);
       strokeWeight(10);
       for (let i = 0; i < numSegments - 1; i++) {
         line(xCor[i], yCor[i], xCor[i + 1], yCor[i + 1]);
       }
-      //console.log(obsticals_corr[0][1]);
-      point(obsticals_corr[0][0], obsticals_corr[0][1]);
+      console.log(obsticals_corr[0][1]);
+      
+      for (let i = 0; i < obsticals_corr.length -1; i++) {
+        stroke(255);
+        strokeWeight(10);
+        point(obsticals_corr[i][0], obsticals_corr[i][1]);
+      }
      
       getDirection();
       updateSnakeCoordinates();
@@ -157,8 +145,7 @@ function draw() {
         }
       //console.log(game.maxScore + ": Max Score");
 
-      loop.stop();
-      Tone.Transport.stop();
+      
       background(0);
       stroke(255);
       strokeWeight(2 );
@@ -323,7 +310,7 @@ function checkGameStatus() {
     xCor[xCor.length - 1] > width ||
     xCor[xCor.length - 1] < 0 ||
     yCor[yCor.length - 1] > height ||
-    yCor[yCor.length - 1] < 0 ||
+    yCor[yCor.length - 1] < 60 ||
     checkSnakeCollision() ||
     checkObsticalCollision()
 
@@ -353,9 +340,10 @@ function checkObsticalCollision() {
   const snakeHeadY = yCor[yCor.length - 1];
   for (let i = 0; i < obsticals_corr.length - 1; i++) {
     if (obsticals_corr[i][0] === snakeHeadX && obsticals_corr[i][1] === snakeHeadY) {
-      if (free_pass && tot_free_pass < 2) {
+      if (free_pass && tot_free_pass < 5) {
         console.log("snakeHeadX and Y" + snakeHeadX + " " + snakeHeadY + " Obs-corr: " + obsticals_corr[i][1] + " " + obsticals_corr[i][0])
         tot_free_pass +=1;
+        free_pass = 0;
         return false;
       }
       else {
@@ -373,6 +361,7 @@ function checkObsticalCollision() {
  I add the last segment again at the tail, thereby extending the tail)
 */
 function checkForFruit() {
+  stroke('purple');
   point(xFruit, yFruit);
   if (xCor[xCor.length - 1] === xFruit && yCor[yCor.length - 1] === yFruit) {
     // const prevScore = parseInt(scoreElem.html().substring(8));
@@ -393,7 +382,7 @@ function updateFruitCoordinates() {
   */
 
   xFruit = floor(random(10, (width - 100) / 10)) * 10;
-  yFruit = floor(random(10, (height - 100) / 10)) * 10;
+  yFruit = floor(random(10, (height - 160) / 10)) * 10;
 }
 
 function keyPressed() {
@@ -428,6 +417,9 @@ function keyPressed() {
           if (direction !== 'up') {
             direction = 'down';
           }
+          break;
+        case SHIFT:
+          free_pass = 1;
           break;
       }
       break;
